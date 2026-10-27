@@ -1,0 +1,33 @@
+{
+  "llm_enabled": {
+    "description": "允许大模型发说说（qzone_publish 工具总开关）",
+    "type": "bool",
+    "default": false,
+    "hint": "也可以在「扩展功能 -> QQ空间说说管理」里随时切换"
+  },
+  "publish_mode": {
+    "description": "LLM 说说的发布方式",
+    "type": "string",
+    "options": ["review", "auto"],
+    "default": "review",
+    "hint": "review=先存草稿，管理员在 WebUI 审核后发布；auto=直接发布"
+  },
+  "admin_only": {
+    "description": "仅管理员可触发 LLM 发说说",
+    "type": "bool",
+    "default": true,
+    "hint": "关闭后群里任何人让 AI 发说说都会生效，慎关"
+  },
+  "ugc_right": {
+    "description": "默认查看权限",
+    "type": "int",
+    "default": 4,
+    "hint": "1=所有人可见 / 4=好友可见 / 16=部分好友可见 / 64=仅自己可见 / 128=部分好友不可见"
+  },
+  "min_interval_seconds": {
+    "description": "两次发说说之间的最小间隔（秒），0 为不限制",
+    "type": "int",
+    "default": 60,
+    "hint": "防止连发触发风控，建议 60~300"
+  }
+}

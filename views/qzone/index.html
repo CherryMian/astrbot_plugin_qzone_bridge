@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QQ空间说说管理</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="/api/plugin/page/bridge-sdk.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div>
+          <h1>🐳 QQ空间说说管理</h1>
+          <p class="sub">LLM 发说说开关 · 草稿审核 · 说说管理（NapCat send_qzone_msg）</p>
+        </div>
+        <div class="header-actions">
+          <span id="stat-chips" class="chips"></span>
+          <button id="refresh-btn" class="btn btn-ghost">🔄 刷新</button>
+        </div>
+      </header>
+
+      <!-- 开关与设置 -->
+      <section class="card">
+        <div class="card-title">⚙️ 开关与设置</div>
+        <div class="grid2">
+          <label class="switch-row">
+            <span>允许 LLM 发说说</span>
+            <input type="checkbox" id="cfg-llm-enabled" class="switch" />
+          </label>
+          <label class="switch-row">
+            <span>仅管理员可触发</span>
+            <input type="checkbox" id="cfg-admin-only" class="switch" />
+          </label>
+          <div class="field">
+            <label for="cfg-publish-mode">LLM 说说发布方式</label>
+            <select id="cfg-publish-mode" class="input">
+              <option value="review">先审后发（存草稿，人工过稿）</option>
+              <option value="auto">直接发布</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cfg-ugc-right">默认查看权限</label>
+            <select id="cfg-ugc-right" class="input">
+              <option value="1">所有人可见</option>
+              <option value="4">好友可见</option>
+              <option value="16">部分好友可见</option>
+              <option value="64">仅自己可见</option>
+              <option value="128">部分好友不可见</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cfg-min-interval">发布最小间隔（秒）</label>
+            <input type="number" id="cfg-min-interval" class="input" min="0" step="10" />
+          </div>
+        </div>
+        <div class="actions">
+          <button id="save-config-btn" class="btn btn-primary">💾 保存设置</button>
+        </div>
+      </section>
+
+      <!-- 手动发布 -->
+      <section class="card">
+        <div class="card-title">✍️ 手动发布</div>
+        <div class="field">
+          <label for="pub-content">说说正文</label>
+          <textarea id="pub-content" class="input" rows="3" placeholder="写点什么发到 QQ 空间…"></textarea>
+        </div>
+        <div class="field">
+          <label for="pub-images">图片地址（可选，每行一个 http(s) 地址）</label>
+          <textarea id="pub-images" class="input" rows="2" placeholder="https://…/a.png"></textarea>
+        </div>
+        <div class="field">
+          <label for="pub-thinking">思维链/备注（仅 WebUI 可见，不会发到空间）</label>
+          <textarea id="pub-thinking" class="input" rows="2" placeholder="可留空"></textarea>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label for="pub-ugc-right">查看权限</label>
+            <select id="pub-ugc-right" class="input">
+              <option value="1">所有人可见</option>
+              <option value="4">好友可见</option>
+              <option value="16">部分好友可见</option>
+              <option value="64">仅自己可见</option>
+              <option value="128">部分好友不可见</option>
+            </select>
+          </div>
+          <div class="field" id="pub-target-wrap" style="display: none">
+            <label for="pub-target-uins">目标 QQ 号（权限为部分好友时必填，逗号分隔）</label>
+            <input id="pub-target-uins" class="input" placeholder="123456,654321" />
+          </div>
+        </div>
+        <div class="actions">
+          <button id="publish-now-btn" class="btn btn-primary">🚀 立即发布</button>
+          <button id="save-draft-btn" class="btn btn-ghost">📝 存为草稿</button>
+        </div>
+      </section>
+
+      <!-- 说说管理 -->
+      <section class="card">
+        <div class="card-title">📋 说说管理</div>
+        <div class="tabs" id="filter-tabs">
+          <button class="tab active" data-filter="all">全部</button>
+          <button class="tab" data-filter="pending">待审核</button>
+          <button class="tab" data-filter="published">已发布</button>
+          <button class="tab" data-filter="rejected">已拒绝</button>
+          <button class="tab" data-filter="failed">失败</button>
+        </div>
+        <div id="post-list" class="post-list">
+          <div class="empty">加载中…</div>
+        </div>
+      </section>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+name: astrbot_plugin_qzone_bridge
+display_name: QQ空间桥接
+desc: 通过 NapCat 扩展接口发/删 QQ空间说说。LLM 工具可开关、可先审后发，WebUI 管理说说记录，不走 cookie
+short_desc: NapCat 发说说 + WebUI 说说管理
+version: v2.1.0
+author: YG
+repo: https://github.com/CherryMian/astrbot_plugin_qzone_bridge
+help: 在左侧「扩展功能 -> QQ空间说说管理」中开启 LLM 发说说、审核/编辑/删除说说、手动发布。无聊天指令。
+support_platforms:
+  - aiocqhttp
+astrbot_version: ">=4.5.0"
